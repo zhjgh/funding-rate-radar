@@ -11,7 +11,7 @@
     <header class="header">
       <div class="brand">
         <h1>资金费率雷达</h1>
-        <p class="sub">Binance USDT-M 永续合约 · 全市场资金费率年化排行</p>
+        <p class="sub">Bybit / Binance USDT 永续合约 · 全市场资金费率年化排行</p>
       </div>
       <div class="status">
         <span class="dot" id="sourceDot"></span>
@@ -29,7 +29,7 @@
           <tr>
             <th class="sortable" data-key="symbol">合约</th>
             <th class="sortable num" data-key="rate">当期费率</th>
-            <th class="sortable num" data-key="annualized">年化 <span class="hint">(8h × 3 × 365)</span></th>
+            <th class="sortable num" data-key="annualized">年化 <span class="hint">(按结算周期)</span></th>
             <th class="num">强度</th>
             <th class="sortable num" data-key="markPrice">标记价格</th>
             <th class="num">下次结算</th>
@@ -44,7 +44,12 @@
     <footer class="footer">
       <p>
         资金费率是永续合约用来锚定现货价格的机制：<strong>费率为正</strong>时多头向空头付费（市场偏多），
-        <strong>费率为负</strong>时空头向多头付费（市场偏空）。每 8 小时结算一次，年化为单利粗算。
+        <strong>费率为负</strong>时空头向多头付费（市场偏空）。多数合约 8 小时结算一次，部分主流币为 1 小时 / 4 小时，
+        年化按各自实际结算周期单利粗算。
+      </p>
+      <p class="muted">
+        榜单中可能混入代币化股票 / 商品的永续合约（如 XAU、SOXL、SKHYNIX），这是交易所真实上线的品种，
+        同样有资金费率，不是数据串了。
       </p>
       <p class="muted" id="note"></p>
     </footer>

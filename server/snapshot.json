@@ -1,0 +1,527 @@
+{
+  "source": "bybit",
+  "snapshotAt": "2026-10-26T03:09:11.014Z",
+  "note": "静态快照：部署环境无法直连交易所 API 时使用，数据为生成时刻的真实行情，非实时。",
+  "list": [
+    {
+      "symbol": "CAPUSDT",
+      "rate": 0.00029913,
+      "intervalHour": 4,
+      "markPrice": 0.11531,
+      "indexPrice": 0.11516,
+      "quoteVolume": 55382929.0419
+    },
+    {
+      "symbol": "SKHYNIXUSDT",
+      "rate": 0.0004483,
+      "intervalHour": 8,
+      "markPrice": 971.12,
+      "indexPrice": 970.24,
+      "quoteVolume": 24583213.4583
+    },
+    {
+      "symbol": "SNDKUSDT",
+      "rate": 0.00038729,
+      "intervalHour": 8,
+      "markPrice": 1239.8,
+      "indexPrice": 1238.53,
+      "quoteVolume": 15908053.6068
+    },
+    {
+      "symbol": "SOXLUSDT",
+      "rate": 0.00034949,
+      "intervalHour": 8,
+      "markPrice": 83.23,
+      "indexPrice": 83.17,
+      "quoteVolume": 98177572.2025
+    },
+    {
+      "symbol": "XAUUSDT",
+      "rate": 0.00012298,
+      "intervalHour": 4,
+      "markPrice": 4016.46,
+      "indexPrice": 4014.15,
+      "quoteVolume": 50737499.6507
+    },
+    {
+      "symbol": "AKEUSDT",
+      "rate": 0.00005049,
+      "intervalHour": 4,
+      "markPrice": 0.0311773,
+      "indexPrice": 0.0311568,
+      "quoteVolume": 11011787.7838
+    },
+    {
+      "symbol": "SOLUSDT",
+      "rate": 0.0001,
+      "intervalHour": 8,
+      "markPrice": 100.96,
+      "indexPrice": 100.996,
+      "quoteVolume": 342859467.696
+    },
+    {
+      "symbol": "ZECUSDT",
+      "rate": 0.0001,
+      "intervalHour": 8,
+      "markPrice": 1194.01,
+      "indexPrice": 1194.43,
+      "quoteVolume": 281085711.7217
+    },
+    {
+      "symbol": "XRPUSDT",
+      "rate": 0.0001,
+      "intervalHour": 8,
+      "markPrice": 1.2855,
+      "indexPrice": 1.286,
+      "quoteVolume": 216219269.8363
+    },
+    {
+      "symbol": "ENAUSDT",
+      "rate": 0.00005,
+      "intervalHour": 4,
+      "markPrice": 0.20354,
+      "indexPrice": 0.20361,
+      "quoteVolume": 119302964.7711
+    },
+    {
+      "symbol": "JCTUSDT",
+      "rate": 0.00005,
+      "intervalHour": 4,
+      "markPrice": 0.0045076,
+      "indexPrice": 0.0044862,
+      "quoteVolume": 95874231.0187
+    },
+    {
+      "symbol": "APRUSDT",
+      "rate": 0.00005,
+      "intervalHour": 4,
+      "markPrice": 0.03367,
+      "indexPrice": 0.03364,
+      "quoteVolume": 95501185.4923
+    },
+    {
+      "symbol": "WLDUSDT",
+      "rate": 0.0001,
+      "intervalHour": 8,
+      "markPrice": 0.4447,
+      "indexPrice": 0.4449,
+      "quoteVolume": 77689906.8259
+    },
+    {
+      "symbol": "TUSDT",
+      "rate": 0.0000125,
+      "intervalHour": 1,
+      "markPrice": 0.00504,
+      "indexPrice": 0.00505,
+      "quoteVolume": 66549041.4833
+    },
+    {
+      "symbol": "ORDERUSDT",
+      "rate": 0.0000125,
+      "intervalHour": 1,
+      "markPrice": 0.04283,
+      "indexPrice": 0.04286,
+      "quoteVolume": 57202432.7202
+    },
+    {
+      "symbol": "SUIUSDT",
+      "rate": 0.0001,
+      "intervalHour": 8,
+      "markPrice": 0.91143,
+      "indexPrice": 0.91192,
+      "quoteVolume": 54055245.136
+    },
+    {
+      "symbol": "XMRUSDT",
+      "rate": 0.0001,
+      "intervalHour": 8,
+      "markPrice": 595.95,
+      "indexPrice": 595.76,
+      "quoteVolume": 30935612.2087
+    },
+    {
+      "symbol": "QUSDT",
+      "rate": 0.00005,
+      "intervalHour": 4,
+      "markPrice": 0.054728,
+      "indexPrice": 0.054727,
+      "quoteVolume": 25678446.6372
+    },
+    {
+      "symbol": "PUMPFUNUSDT",
+      "rate": 0.00005,
+      "intervalHour": 4,
+      "markPrice": 0.0041831,
+      "indexPrice": 0.0041868,
+      "quoteVolume": 24760175.8339
+    },
+    {
+      "symbol": "LINKUSDT",
+      "rate": 0.0001,
+      "intervalHour": 8,
+      "markPrice": 11.387,
+      "indexPrice": 11.393,
+      "quoteVolume": 22302186.9237
+    },
+    {
+      "symbol": "UNIUSDT",
+      "rate": 0.0001,
+      "intervalHour": 8,
+      "markPrice": 6.86,
+      "indexPrice": 6.865,
+      "quoteVolume": 18840133.9141
+    },
+    {
+      "symbol": "INJUSDT",
+      "rate": 0.0001,
+      "intervalHour": 8,
+      "markPrice": 7.676,
+      "indexPrice": 7.6796,
+      "quoteVolume": 17347621.8466
+    },
+    {
+      "symbol": "STRKUSDT",
+      "rate": 0.00005,
+      "intervalHour": 4,
+      "markPrice": 0.04521,
+      "indexPrice": 0.04526,
+      "quoteVolume": 17191087.0706
+    },
+    {
+      "symbol": "TAOUSDT",
+      "rate": 0.00005,
+      "intervalHour": 4,
+      "markPrice": 250.08,
+      "indexPrice": 250.22,
+      "quoteVolume": 17100861.894
+    },
+    {
+      "symbol": "TRUMPUSDT",
+      "rate": 0.00005,
+      "intervalHour": 4,
+      "markPrice": 1.636,
+      "indexPrice": 1.638,
+      "quoteVolume": 15121699.4722
+    },
+    {
+      "symbol": "AAVEUSDT",
+      "rate": 0.0001,
+      "intervalHour": 8,
+      "markPrice": 135.1,
+      "indexPrice": 135.17,
+      "quoteVolume": 14714084.6958
+    },
+    {
+      "symbol": "LIGHTUSDT",
+      "rate": 0.00005,
+      "intervalHour": 4,
+      "markPrice": 0.23691,
+      "indexPrice": 0.23691,
+      "quoteVolume": 13896002.1333
+    },
+    {
+      "symbol": "XAUTUSDT",
+      "rate": 0.00005,
+      "intervalHour": 4,
+      "markPrice": 4008.07,
+      "indexPrice": 4009.01,
+      "quoteVolume": 12816978.2914
+    },
+    {
+      "symbol": "GRASSUSDT",
+      "rate": 0.00005,
+      "intervalHour": 4,
+      "markPrice": 0.7038,
+      "indexPrice": 0.70447,
+      "quoteVolume": 12596403.7897
+    },
+    {
+      "symbol": "ZROUSDT",
+      "rate": 0.00005,
+      "intervalHour": 4,
+      "markPrice": 1.7109,
+      "indexPrice": 1.713,
+      "quoteVolume": 12233282.0051
+    },
+    {
+      "symbol": "USELESSUSDT",
+      "rate": 0.00005,
+      "intervalHour": 4,
+      "markPrice": 0.16462,
+      "indexPrice": 0.16462,
+      "quoteVolume": 12121611.15
+    },
+    {
+      "symbol": "MAGMAUSDT",
+      "rate": 0.00005,
+      "intervalHour": 4,
+      "markPrice": 0.34942,
+      "indexPrice": 0.34929,
+      "quoteVolume": 11543222.1503
+    },
+    {
+      "symbol": "FARTCOINUSDT",
+      "rate": 0.00005,
+      "intervalHour": 4,
+      "markPrice": 0.12429,
+      "indexPrice": 0.1245,
+      "quoteVolume": 11392201.8059
+    },
+    {
+      "symbol": "LITUSDT",
+      "rate": 0.00005,
+      "intervalHour": 4,
+      "markPrice": 3.1228,
+      "indexPrice": 3.125,
+      "quoteVolume": 11110438.1676
+    },
+    {
+      "symbol": "TIAUSDT",
+      "rate": 0.00004444,
+      "intervalHour": 4,
+      "markPrice": 0.5388,
+      "indexPrice": 0.5393,
+      "quoteVolume": 12747659.7698
+    },
+    {
+      "symbol": "ARBUSDT",
+      "rate": 0.0000853,
+      "intervalHour": 8,
+      "markPrice": 0.16772,
+      "indexPrice": 0.16792,
+      "quoteVolume": 13674970.7353
+    },
+    {
+      "symbol": "LTCUSDT",
+      "rate": 0.0000835,
+      "intervalHour": 8,
+      "markPrice": 56.51,
+      "indexPrice": 56.54,
+      "quoteVolume": 12542358.06
+    },
+    {
+      "symbol": "ONDOUSDT",
+      "rate": 0.00004103,
+      "intervalHour": 4,
+      "markPrice": 0.4036,
+      "indexPrice": 0.4038,
+      "quoteVolume": 18585715.6136
+    },
+    {
+      "symbol": "AVAXUSDT",
+      "rate": 0.0000799,
+      "intervalHour": 8,
+      "markPrice": 8.858,
+      "indexPrice": 8.861,
+      "quoteVolume": 14457996.8332
+    },
+    {
+      "symbol": "DOTUSDT",
+      "rate": 0.00005172,
+      "intervalHour": 8,
+      "markPrice": 1.0222,
+      "indexPrice": 1.023,
+      "quoteVolume": 10439910.223
+    },
+    {
+      "symbol": "MUUSDT",
+      "rate": 0.00004933,
+      "intervalHour": 8,
+      "markPrice": 881.88,
+      "indexPrice": 881.57,
+      "quoteVolume": 13331057.6122
+    },
+    {
+      "symbol": "BNBUSDT",
+      "rate": 0.00002703,
+      "intervalHour": 8,
+      "markPrice": 737.27,
+      "indexPrice": 737.54,
+      "quoteVolume": 21820993.5314
+    },
+    {
+      "symbol": "1000PEPEUSDT",
+      "rate": 0.00002021,
+      "intervalHour": 8,
+      "markPrice": 0.004267,
+      "indexPrice": 0.0042701,
+      "quoteVolume": 55198668.9093
+    },
+    {
+      "symbol": "QNTUSDT",
+      "rate": 0.00001604,
+      "intervalHour": 8,
+      "markPrice": 190.63,
+      "indexPrice": 190.69,
+      "quoteVolume": 18073273.1262
+    },
+    {
+      "symbol": "BTCUSDT",
+      "rate": 0.00000831,
+      "intervalHour": 8,
+      "markPrice": 79676.79,
+      "indexPrice": 79715.15,
+      "quoteVolume": 2663875335.7074
+    },
+    {
+      "symbol": "KORUUSDT",
+      "rate": 0,
+      "intervalHour": 8,
+      "markPrice": 10.55,
+      "indexPrice": 10.55,
+      "quoteVolume": 35748768.8891
+    },
+    {
+      "symbol": "XAGUSDT",
+      "rate": 0,
+      "intervalHour": 4,
+      "markPrice": 54.22,
+      "indexPrice": 54.19,
+      "quoteVolume": 22149852.1483
+    },
+    {
+      "symbol": "EWZUSDT",
+      "rate": 0,
+      "intervalHour": 8,
+      "markPrice": 34.46,
+      "indexPrice": 34.42,
+      "quoteVolume": 17182965.0408
+    },
+    {
+      "symbol": "SKHYUSDT",
+      "rate": 0,
+      "intervalHour": 8,
+      "markPrice": 139.69,
+      "indexPrice": 139.62,
+      "quoteVolume": 12545159.1373
+    },
+    {
+      "symbol": "MSTRUSDT",
+      "rate": 0,
+      "intervalHour": 8,
+      "markPrice": 141.5,
+      "indexPrice": 141.43,
+      "quoteVolume": 12106500.161
+    },
+    {
+      "symbol": "SOXSUSDT",
+      "rate": 0,
+      "intervalHour": 8,
+      "markPrice": 52.91,
+      "indexPrice": 52.89,
+      "quoteVolume": 11897578.9309
+    },
+    {
+      "symbol": "ETHUSDT",
+      "rate": -0.00001292,
+      "intervalHour": 8,
+      "markPrice": 2311.84,
+      "indexPrice": 2312.86,
+      "quoteVolume": 1685647322.6439
+    },
+    {
+      "symbol": "HYPEUSDT",
+      "rate": -0.00003305,
+      "intervalHour": 8,
+      "markPrice": 75.49,
+      "indexPrice": 75.538,
+      "quoteVolume": 80293651.5677
+    },
+    {
+      "symbol": "DOGEUSDT",
+      "rate": -0.0000399,
+      "intervalHour": 8,
+      "markPrice": 0.07661,
+      "indexPrice": 0.07665,
+      "quoteVolume": 41972193.353
+    },
+    {
+      "symbol": "NEARUSDT",
+      "rate": -0.00014303,
+      "intervalHour": 8,
+      "markPrice": 4.484,
+      "indexPrice": 4.4873,
+      "quoteVolume": 198723486.9664
+    },
+    {
+      "symbol": "ADAUSDT",
+      "rate": -0.00015414,
+      "intervalHour": 8,
+      "markPrice": 0.2026,
+      "indexPrice": 0.2028,
+      "quoteVolume": 27157838.1679
+    },
+    {
+      "symbol": "BIRBUSDT",
+      "rate": -0.00003423,
+      "intervalHour": 1,
+      "markPrice": 0.07215,
+      "indexPrice": 0.07224,
+      "quoteVolume": 33392222.0528
+    },
+    {
+      "symbol": "BZUSDT",
+      "rate": -0.00041935,
+      "intervalHour": 8,
+      "markPrice": 109.49,
+      "indexPrice": 109.58,
+      "quoteVolume": 10788961.1811
+    },
+    {
+      "symbol": "CLUSDT",
+      "rate": -0.0004453,
+      "intervalHour": 8,
+      "markPrice": 101.05,
+      "indexPrice": 101.16,
+      "quoteVolume": 47634691.1701
+    },
+    {
+      "symbol": "BMTUSDT",
+      "rate": -0.00043687,
+      "intervalHour": 1,
+      "markPrice": 0.033519,
+      "indexPrice": 0.03355,
+      "quoteVolume": 12458054.8177
+    },
+    {
+      "symbol": "BTWUSDT",
+      "rate": -0.00255386,
+      "intervalHour": 4,
+      "markPrice": 1.68486,
+      "indexPrice": 1.6869,
+      "quoteVolume": 23428050.9996
+    },
+    {
+      "symbol": "IOSTUSDT",
+      "rate": -0.00099018,
+      "intervalHour": 1,
+      "markPrice": 0.0007656,
+      "indexPrice": 0.0007669,
+      "quoteVolume": 10525598.3524
+    },
+    {
+      "symbol": "IRYSUSDT",
+      "rate": -0.00228536,
+      "intervalHour": 1,
+      "markPrice": 0.039493,
+      "indexPrice": 0.039562,
+      "quoteVolume": 90340553.5324
+    },
+    {
+      "symbol": "ERAUSDT",
+      "rate": -0.00977391,
+      "intervalHour": 4,
+      "markPrice": 0.08748,
+      "indexPrice": 0.08849,
+      "quoteVolume": 14851888.3079
+    },
+    {
+      "symbol": "AXISUSDT",
+      "rate": -0.02060695,
+      "intervalHour": 4,
+      "markPrice": 0.2711,
+      "indexPrice": 0.2739,
+      "quoteVolume": 18864792.6591
+    }
+  ]
+}

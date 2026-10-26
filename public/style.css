@@ -68,6 +68,8 @@ body {
 
 .dot.live { background: var(--neg); box-shadow: 0 0 8px var(--neg); }
 .dot.mock { background: var(--accent); box-shadow: 0 0 8px var(--accent); }
+/* 快照：数据是真的，但不是这一秒的，用中性灰表示「静态」 */
+.dot.snapshot { background: #7d8a9e; box-shadow: 0 0 8px #7d8a9e; }
 
 .sep { opacity: 0.35; }
 
@@ -151,6 +153,18 @@ body {
   color: var(--muted);
 }
 
+/* 非 8 小时结算的合约加个角标，避免年化看起来莫名偏高 */
+.symbol .interval {
+  margin-left: 6px;
+  padding: 0 4px;
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--accent);
+  border: 1px solid rgba(240, 185, 11, 0.35);
+  border-radius: 3px;
+  vertical-align: 1px;
+}
+
 td.num { font-variant-numeric: tabular-nums; }
 td.strong { font-weight: 600; }
 td.muted { color: var(--muted); }
@@ -166,12 +180,19 @@ td.countdown { color: var(--text); opacity: 0.75; }
 }
 
 /* 强度条 */
+/* 条形宽度由 JS 以像素给出（满格 120px）。之前用百分比时，
+   td 宽度是内容撑出来的（auto），百分比又要按 td 宽度算，两者互相依赖，
+   结果条形被压成一个点，整列看不出差异。 */
+.table th:nth-child(4),
+.table td:nth-child(4) {
+  width: 152px;
+}
+
 .bar {
   display: inline-block;
-  height: 4px;
-  border-radius: 2px;
+  height: 6px;
+  border-radius: 3px;
   vertical-align: middle;
-  max-width: 80px;
   min-width: 3px;
 }
 

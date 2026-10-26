@@ -13,7 +13,7 @@
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
-const { getFundingSnapshot } = require('./binance');
+const { getFundingSnapshot } = require('./sources');
 
 const PORT = Number(process.env.PORT) || 3000;
 const PUBLIC_DIR = path.join(__dirname, '..', 'public');
@@ -74,7 +74,8 @@ const server = http.createServer(async (req, res) => {
   serveStatic(req, res);
 });
 
-server.listen(PORT, () => {
+// 必须显式绑定 0.0.0.0，否则容器内只监听 localhost，反向代理进不来
+server.listen(PORT, '0.0.0.0', () => {
   console.log(`资金费率雷达已启动  →  http://localhost:${PORT}`);
   console.log(`数据接口            →  http://localhost:${PORT}/api/funding`);
 });

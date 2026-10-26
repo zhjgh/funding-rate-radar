@@ -41,13 +41,35 @@ function fmtCountdown(ms) {
 /* ---------------- 渲染 ---------------- */
 
 function renderStatus(data) {
-  const isLive = data.source === 'binance';
-  $('#sourceDot').className = 'dot ' + (isLive ? 'live' : 'mock');
-  $('#sourceText').textContent = isLive ? '实时数据' : '离线演示数据';
-  $('#updatedText').textContent = new Date(data.fetchedAt).toLocaleTimeString('zh-CN', { hour12: false });
+  const PROVIDER = { bybit: 'Bybit', binance: 'Binance' };
+  const isLive = Boolean(PROVIDER[data.source]);
+  const isSnapshot = data.source === 'snapshot';
+  // 快照也标出原始交易所，避免看的人以为是假数据
+  const sourceName = PROVIDER[data.source] || PROVIDER[data.provider] || '交易所';
+
+  $('#sourceDot').className = 'dot ' + (isLive ? 'live' : isSnapshot ? 'snapshot' : 'mock');
+  $('#sourceText').textContent = isLive
+    ? `实时数据 · ${sourceName}`
+    : isSnapshot
+    ? `快照数据 · ${sourceName}`
+    : '离线演示数据';
+
+  // 快照显示的是抓取时间而不是本次请求时间，否则看的人会误以为数据是新的
+  const stamp = isSnapshot && data.snapshotAt ? new Date(data.snapshotAt) : new Date(data.fetchedAt);
+  $('#updatedText').textContent = stamp.toLocaleString('zh-CN', {
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false,
+  });
+
   $('#note').textContent = isLive
-    ? `已从 ${data.totalUsdtContracts} 个 USDT 永续合约中，按日成交额筛出最活跃的 ${data.list.length} 个（剔除低流动性合约与法币汇率对 ${data.filteredOut} 个）。`
-    : `当前为离线快照（原因：${data.fallbackReason || '网络不可达'}），数据非实时。`;
+    ? `来源 ${sourceName} 线性合约，按日成交额筛出最活跃的 ${data.list.length} 个合约；年化按各自结算周期换算。`
+    : isSnapshot
+    ? `部署环境无法直连交易所接口（${data.fallbackReason || '网络不可达'}），因此展示最近一次真实抓取的行情快照，数值真实但非实时。`
+    : `当前为离线演示数据（${data.fallbackReason || '网络不可达'}），仅用于保证 demo 可演示，不是真实行情。`;
 }
 
 function renderStats(summary) {
@@ -77,19 +99,27 @@ function render() {
     return (av - bv) * state.sortDir;
   });
 
-  // 强度条以当前最大绝对年化为基准，让极端值一眼看出来
-  const maxAbs = Math.max(...list.map((x) => Math.abs(x.annualized)), 1);
+  // 强度条以「P90 分位」为基准归一化，而不是最大绝对值：
+  // 榜单里常有一个 -4000% 的极端合约，拿它当分母会把其余 60 多行压成一条细线，
+  // 整列就失去意义了。用 P90 当满格基准，超出的直接饱和到满格显示。
+  const absSorted = list.map((x) => Math.abs(x.annualized)).sort((a, b) => a - b);
+  const ref = Math.max(absSorted[Math.floor(absSorted.length * 0.9)] || 1, 1);
+  const TRACK_PX = 120; // 条形满格宽度，用像素而不是百分比，避免和 td 的自动宽度互相依赖
 
   $('#rows').innerHTML = list
     .map((item) => {
       const isPos = item.annualized >= 0;
       const tone = isPos ? 'pos' : 'neg';
-      const width = Math.max(2, (Math.abs(item.annualized) / maxAbs) * 100);
+      const width = Math.max(3, Math.min(TRACK_PX, (Math.abs(item.annualized) / ref) * TRACK_PX));
       return `<tr>
-        <td class="symbol">${item.symbol.replace('USDT', '')}<span class="quote">USDT</span></td>
+        <td class="symbol">${item.symbol.replace('USDT', '')}<span class="quote">USDT</span>${
+          item.intervalHour && item.intervalHour !== 8
+            ? `<span class="interval">${item.intervalHour}h</span>`
+            : ''
+        }</td>
         <td class="num ${tone}">${fmtRate(item.rate)}</td>
         <td class="num ${tone} strong">${fmtAnnual(item.annualized)}</td>
-        <td class="num"><span class="bar ${tone}" style="width:${width}%"></span></td>
+        <td class="num"><span class="bar ${tone}" style="width:${width.toFixed(0)}px"></span></td>
         <td class="num muted">${fmtPrice(item.markPrice)}</td>
         <td class="num countdown" data-ts="${item.nextFundingTime}">--:--:--</td>
       </tr>`;
@@ -133,7 +163,9 @@ function tick() {
 
 async function load() {
   try {
-    const res = await fetch('/api/funding');
+    // 把页面上的查询参数原样透传给接口：本地跑是空串，
+    // 部署平台会带 ?sharecode=xxx 做访问校验，不带就 403。
+    const res = await fetch('/api/funding' + window.location.search);
     if (!res.ok) throw new Error('接口返回 ' + res.status);
     const data = await res.json();
     state.list = data.list || [];
