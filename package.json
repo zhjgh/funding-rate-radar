@@ -1,0 +1,14 @@
+{
+  "name": "funding-rate-radar",
+  "version": "1.0.0",
+  "description": "Binance USDT-M 永续合约资金费率年化排行 —— 零依赖全栈小工具",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js"
+  },
+  "keywords": ["crypto", "perpetual-futures", "funding-rate", "binance"],
+  "engines": {
+    "node": ">=14"
+  },
+  "license": "MIT"
+}

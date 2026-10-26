@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>资金费率雷达 · Funding Rate Radar</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <div class="page">
+    <header class="header">
+      <div class="brand">
+        <h1>资金费率雷达</h1>
+        <p class="sub">Binance USDT-M 永续合约 · 全市场资金费率年化排行</p>
+      </div>
+      <div class="status">
+        <span class="dot" id="sourceDot"></span>
+        <span id="sourceText">连接中</span>
+        <span class="sep">|</span>
+        <span id="updatedText">--:--:--</span>
+      </div>
+    </header>
+
+    <section class="stats" id="stats"></section>
+
+    <main class="board">
+      <table class="table">
+        <thead>
+          <tr>
+            <th class="sortable" data-key="symbol">合约</th>
+            <th class="sortable num" data-key="rate">当期费率</th>
+            <th class="sortable num" data-key="annualized">年化 <span class="hint">(8h × 3 × 365)</span></th>
+            <th class="num">强度</th>
+            <th class="sortable num" data-key="markPrice">标记价格</th>
+            <th class="num">下次结算</th>
+          </tr>
+        </thead>
+        <tbody id="rows">
+          <tr><td colspan="6" class="loading">加载中…</td></tr>
+        </tbody>
+      </table>
+    </main>
+
+    <footer class="footer">
+      <p>
+        资金费率是永续合约用来锚定现货价格的机制：<strong>费率为正</strong>时多头向空头付费（市场偏多），
+        <strong>费率为负</strong>时空头向多头付费（市场偏空）。每 8 小时结算一次，年化为单利粗算。
+      </p>
+      <p class="muted" id="note"></p>
+    </footer>
+  </div>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+{
+  "note": "离线演示快照。网络无法访问 Binance（区域限制/限流）时自动降级使用，数据非实时，仅用于保证 demo 可演示。",
+  "nextFundingInMinutes": 137,
+  "list": [
+    { "symbol": "PEPEUSDT",  "rate":  0.000523, "annualized":  57.27, "markPrice":  0.00000983, "indexPrice":  0.00000981 },
+    { "symbol": "SUIUSDT",   "rate":  0.000412, "annualized":  45.11, "markPrice":  3.1542,     "indexPrice":  3.1518 },
+    { "symbol": "DOGEUSDT",  "rate":  0.000334, "annualized":  36.57, "markPrice":  0.23518,    "indexPrice":  0.23492 },
+    { "symbol": "AVAXUSDT",  "rate":  0.000267, "annualized":  29.24, "markPrice":  28.542,     "indexPrice":  28.511 },
+    { "symbol": "SOLUSDT",   "rate":  0.000212, "annualized":  23.21, "markPrice":  196.42,     "indexPrice":  196.28 },
+    { "symbol": "LINKUSDT",  "rate":  0.000191, "annualized":  20.91, "markPrice":  17.842,     "indexPrice":  17.831 },
+    { "symbol": "XRPUSDT",   "rate":  0.000156, "annualized":  17.08, "markPrice":  2.4518,     "indexPrice":  2.4497 },
+    { "symbol": "APTUSDT",   "rate":  0.000143, "annualized":  15.66, "markPrice":  8.412,      "indexPrice":  8.398 },
+    { "symbol": "BTCUSDT",   "rate":  0.000100, "annualized":  10.95, "markPrice":  112340.5,   "indexPrice":  112298.2 },
+    { "symbol": "ETHUSDT",   "rate":  0.000085, "annualized":   9.31, "markPrice":  4128.42,    "indexPrice":  4125.91 },
+    { "symbol": "BNBUSDT",   "rate":  0.000073, "annualized":   7.99, "markPrice":  691.24,     "indexPrice":  690.82 },
+    { "symbol": "TONUSDT",   "rate":  0.000062, "annualized":   6.79, "markPrice":  4.6218,     "indexPrice":  4.6195 },
+    { "symbol": "ADAUSDT",   "rate":  0.000048, "annualized":   5.26, "markPrice":  0.72184,    "indexPrice":  0.72162 },
+    { "symbol": "TRXUSDT",   "rate":  0.000029, "annualized":   3.18, "markPrice":  0.28412,    "indexPrice":  0.28406 },
+    { "symbol": "LTCUSDT",   "rate":  0.000011, "annualized":   1.20, "markPrice":  92.34,      "indexPrice":  92.32 },
+    { "symbol": "ARBUSDT",   "rate": -0.000087, "annualized":  -9.53, "markPrice":  0.6812,     "indexPrice":  0.6818 },
+    { "symbol": "OPUSDT",    "rate": -0.000124, "annualized": -13.58, "markPrice":  1.4218,     "indexPrice":  1.4231 },
+    { "symbol": "WIFUSDT",   "rate": -0.000298, "annualized": -32.63, "markPrice":  1.8524,     "indexPrice":  1.8561 }
+  ]
+}
