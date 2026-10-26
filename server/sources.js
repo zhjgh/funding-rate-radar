@@ -1,7 +1,8 @@
 /**
  * 多数据源适配层
  * ------------------------------------------------------------
- * 按顺序尝试多个交易所公开接口，第一个成功的即采用；全部失败则降级本地快照。
+ * 并发请求多个交易所公开接口，谁先返回有效数据就用谁；全部失败则进入熔断窗口，
+ * 直接返回本地降级数据，不再每次都去等一遍超时。
  *
  *   1. Bybit  v5/market/tickers?category=linear   —— 一次返回全市场，且带 fundingIntervalHour
  *   2. Binance fapi/v1/premiumIndex + ticker/24hr —— 需要两份数据拼，结算间隔按 8h
@@ -72,7 +73,7 @@ function toItem({ symbol, rate, intervalHour, markPrice, indexPrice, volume, nex
 
 /** Bybit：一次请求拿全市场 */
 async function loadBybit() {
-  const res = await fetchJSON('https://api.bybit.com/v5/market/tickers?category=linear');
+  const res = await fetchJSON('https://api.bybit.com/v5/market/tickers?category=linear', PROVIDER_TIMEOUT);
   if (res.retCode !== 0) throw new Error(res.retMsg || 'Bybit 返回异常');
 
   return res.result.list
@@ -93,8 +94,8 @@ async function loadBybit() {
 /** Binance：费率 + 成交量两份数据拼（接口不含结算间隔，按 8h 处理） */
 async function loadBinance() {
   const [premium, tickers] = await Promise.all([
-    fetchJSON('https://fapi.binance.com/fapi/v1/premiumIndex'),
-    fetchJSON('https://fapi.binance.com/fapi/v1/ticker/24hr').catch(() => null),
+    fetchJSON('https://fapi.binance.com/fapi/v1/premiumIndex', PROVIDER_TIMEOUT),
+    fetchJSON('https://fapi.binance.com/fapi/v1/ticker/24hr', PROVIDER_TIMEOUT).catch(() => null),
   ]);
 
   const volumeMap = {};
@@ -124,6 +125,23 @@ const PROVIDERS = [
   ['binance', loadBinance],
 ];
 
+/**
+ * 数据源请求超时（毫秒）
+ * 部署在云上时交易所接口基本连不通，超时值直接决定首屏要等多久。
+ * 8 秒 × 2 个源串行 = 16 秒，页面会一直停在「加载中」——
+ * 所以这里收紧到 3 秒，并且改成并发竞速（见 loadFirstAvailable）。
+ */
+const PROVIDER_TIMEOUT = 3000;
+
+/**
+ * 熔断窗口（毫秒）
+ * 一旦确认「所有数据源都不可达」，在接下来 5 分钟里不再尝试，
+ * 直接返回降级数据。否则每 30 秒一次的前端轮询会反复走一遍超时路径，
+ * 每次都卡好几秒。这是典型的熔断器（circuit breaker）用法。
+ */
+const FAIL_COOLDOWN = 5 * 60 * 1000;
+let cooldownUntil = 0;
+
 /** 过滤低流动性 + 取最活跃 N 个 + 按年化排序 */
 function rank(list) {
   const valid = list.filter((x) => Number.isFinite(x.rate) && x.nextFundingTime > 0);
@@ -133,6 +151,34 @@ function rank(list) {
     .sort((a, b) => b.quoteVolume - a.quoteVolume)
     .slice(0, TOP_N)
     .sort((a, b) => b.annualized - a.annualized);
+}
+
+/**
+ * 并发竞速：两个源同时发请求，谁先返回有效数据就用谁。
+ *
+ * 之前是 for 循环串行 await，第一路超时之后才试第二路，最坏情况等满
+ * 「源数量 × 超时」。改成并发之后，最坏情况只等于「单个超时」。
+ * 注意仍然是并发但**不完全对等**：先成功的胜出即可，不做额外加权 ——
+ * 两个源的数据结构在 toItem 里已经归一化，谁先到都能用。
+ */
+function loadFirstAvailable() {
+  return new Promise((resolve, reject) => {
+    const errors = [];
+    let pending = PROVIDERS.length;
+
+    PROVIDERS.forEach(([name, loader]) => {
+      loader()
+        .then((raw) => {
+          const list = rank(raw);
+          if (!list.length) throw new Error('返回数据为空');
+          resolve({ name, list });
+        })
+        .catch((err) => {
+          errors.push(`${name}: ${err.message}`);
+          if (--pending === 0) reject(Object.assign(new Error('全部数据源不可达'), { errors }));
+        });
+    });
+  });
 }
 
 /** 汇总指标：给顶部指标卡用 */
@@ -152,37 +198,44 @@ function summarize(list) {
 /**
  * 对外唯一入口
  * 返回 { source, fetchedAt, cached, list, summary }
- * source = 'bybit' | 'binance' 表示实时，'mock' 表示降级到本地快照
+ * source = 'bybit' | 'binance' 表示实时，'snapshot' / 'mock' 表示降级
  */
 async function getFundingSnapshot() {
   const now = Date.now();
 
+  // 1. 有未过期的缓存，直接返回（实时数据也缓存 60 秒，降级数据同样缓存）
   if (cache.data && now - cache.at < CACHE_TTL) {
     return { ...cache.data, cached: true };
   }
 
-  const errors = [];
-  for (const [name, loader] of PROVIDERS) {
-    try {
-      const list = rank(await loader());
-      if (!list.length) throw new Error('返回数据为空');
-
-      const snapshot = {
-        source: name,
-        fetchedAt: new Date().toISOString(),
-        cached: false,
-        list,
-        summary: summarize(list),
-      };
-      cache = { at: now, data: snapshot };
-      return snapshot;
-    } catch (err) {
-      errors.push(`${name}: ${err.message}`);
-    }
+  // 2. 熔断窗口内不再打交易所接口 —— 这是之前每次都要卡十几秒的根因
+  if (now < cooldownUntil) {
+    const remain = Math.ceil((cooldownUntil - now) / 1000);
+    const fallback = loadFallback([`数据源不可达（熔断中，${remain}s 后重试）`]);
+    cache = { at: now, data: fallback };
+    return fallback;
   }
 
-  // 全部数据源失败 —— 降级到本地数据，保证 demo 永远能演示
-  return loadFallback(errors);
+  try {
+    const { name, list } = await loadFirstAvailable();
+    const snapshot = {
+      source: name,
+      fetchedAt: new Date().toISOString(),
+      cached: false,
+      list,
+      summary: summarize(list),
+    };
+    cache = { at: now, data: snapshot };
+    cooldownUntil = 0; // 恢复正常
+    return snapshot;
+  } catch (err) {
+    // 3. 全部失败：进入熔断窗口，并把降级结果写进缓存，
+    //    保证后面 60 秒内的请求都是毫秒级返回
+    cooldownUntil = Date.now() + FAIL_COOLDOWN;
+    const fallback = loadFallback(err.errors || [err.message]);
+    cache = { at: now, data: fallback };
+    return fallback;
+  }
 }
 
 /**

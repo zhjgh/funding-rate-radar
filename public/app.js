@@ -161,19 +161,40 @@ function tick() {
 
 /* ---------------- 启动 ---------------- */
 
+const FETCH_TIMEOUT = 10 * 1000;
+let firstLoadDone = false;
+
 async function load() {
+  // 没有超时兜底的 fetch 会一直挂着，页面就永远停在「加载中」。
+  // 之前接口要等 16 秒（两个数据源串行超时），就是这么卡住的。
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), FETCH_TIMEOUT);
+
   try {
     // 把页面上的查询参数原样透传给接口：本地跑是空串，
     // 部署平台会带 ?sharecode=xxx 做访问校验，不带就 403。
-    const res = await fetch('/api/funding' + window.location.search);
-    if (!res.ok) throw new Error('接口返回 ' + res.status);
+    const res = await fetch('/api/funding' + window.location.search, { signal: ctrl.signal });
+    if (!res.ok) throw new Error('接口返回 HTTP ' + res.status);
     const data = await res.json();
-    state.list = data.list || [];
+    if (!data.list || !data.list.length) throw new Error('接口返回空数据集');
+
+    state.list = data.list;
     renderStatus(data);
     renderStats(data.summary);
     render();
+    firstLoadDone = true;
   } catch (err) {
-    $('#rows').innerHTML = `<tr><td colspan="6" class="loading">加载失败：${err.message}</td></tr>`;
+    const msg = err.name === 'AbortError' ? `请求超时（${FETCH_TIMEOUT / 1000}s）` : err.message;
+    // 已经拿到过数据的话，保留旧表格，只在状态栏标红，不要清空
+    if (!firstLoadDone) {
+      $('#rows').innerHTML = `<tr><td colspan="6" class="loading">加载失败：${msg}，正在重试…</td></tr>`;
+    }
+    $('#sourceDot').className = 'dot mock';
+    $('#sourceText').textContent = '连接失败';
+    $('#note').textContent = `${msg}。页面会在 10 秒后自动重试。`;
+    setTimeout(load, 10000);
+  } finally {
+    clearTimeout(timer);
   }
 }
 
